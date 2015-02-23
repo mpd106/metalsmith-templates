@@ -35,6 +35,16 @@ describe('metalsmith-templates', function(){
       });
   });
 
+  it('should read templates when using inPlace option', function(done){
+    Metalsmith('test/fixtures/in-place-partials')
+      .use(templates({ engine: 'handlebars', inPlace: true, partials: { 'nav': 'templates/partials/nav.html' }}))
+      .build(function(err){
+        if (err) return done(err);
+        equal('test/fixtures/in-place-partials/expected', 'test/fixtures/in-place-partials/build');
+        done();
+      });
+  });
+
   it('should accept a pattern to match', function(done){
     Metalsmith('test/fixtures/pattern')
       .use(templates({ engine: 'swig', pattern: '*.md' }))
